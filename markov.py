@@ -7,13 +7,19 @@ def make_chains(corpus):
     words_list = corpus.rstrip().split(" ") # put this on one line chained
     #words = words.strip("\n") this doesnt work because words is a list and you cant 
     # 'strip' a list... we may need a for loop! 
-    words_list = [w.rstrip() for w in words_list]
+    words_list = [w.rstrip("\n.,").lower() for w in words_list]
     # we started with the for loop below and then condensed it into list_comprehension above.
     # for w in words:
     #     stripped_words.append(w.rstrip())
     
     # now create dictionary!!
     bigrams_dictionary = {}
+    tuples_list = []
+    for word in words_list:
+        if word != words_list[-1]:
+            tuples_list.append((word, words_list[words_list.index(word) + 1]))
+
+    print tuples_list
 
     # for word in words_list:
     #     # first word = "some"
@@ -22,12 +28,12 @@ def make_chains(corpus):
     #     bigram_key = (words_list[index], words_list[index+1])
     #     bigrams_dictionary(bigram_key) = [words_list[index+2]]
 
-    for idx, word in enumerate(words_list): 
-        next_word = words_list[idx+1]
-        next_next_word = words_list[idx+2]
-        if idx+2 < 7:    
-            bigram_key = (word, next_word)
-            bigrams_dictionary[bigram_key] = [next_next_word]
+    # for idx, word in enumerate(words_list): 
+    #     next_word = words_list[idx+1]
+    #     next_next_word = words_list[idx+2]
+    #     if idx+2 < 7:    
+    #         bigram_key = (word, next_word)
+    #         bigrams_dictionary[bigram_key] = [next_next_word]
 
     #key- this will need to be a tuple for the first word in the bigram followed by the second word
     # pseudo code for how to get key 'key = (word in words_list, word+1 in words_list)'
@@ -42,9 +48,8 @@ def make_chains(corpus):
     # print "This is words:", words_list
     
     # return {}
-    print bigrams_dictionary
-
-
+    # print tuples_list
+    
 
 
 
@@ -58,7 +63,7 @@ def make_chains(corpus):
 # be used by examining the `sys.argv` arguments (if neccessary, see the
 # Python docs for sys.argv)
 
-input_text = "Some text is here,\n Some text is there"
+input_text = "Some text is here,\n Some text is there."
 # Get a Markov chain
 
 make_chains(input_text)
